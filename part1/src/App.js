@@ -1,30 +1,33 @@
 import React from "react";
 
-const Hello = (props) => {
-  return (
-    <>
-      <p>Hello, {props.name}, you look like you're {props.age} years old!</p>
-    </>
-  )
-}
-
-const App = () => {
-  let now = new Date();
-  let a = 10;
-  let b= 20;
+const Hello = ({ name, age }) => {
+  function bornYear() {
+    return new Date().getFullYear() - age;
+  }
 
   return (
     <>
-      <h1>
-        <Hello name="Marc" age={a + b}/>
-        <Hello name="Urte" age="10"/>
-      </h1>
-      <p>Hello world, it is {now.toLocaleString()}</p>
       <p>
-        {a} plus {b} is {a + b}
+        Hello, {name}, you look like you're {age} years old!
+      </p>
+      <p>
+        So were you born in {bornYear()}?
       </p>
     </>
-  )
+  );
+};
+
+const App = () => {
+  const name = "Marc";
+  const age = 10;
+
+  return (
+    <>
+      <h1>Greetings!</h1>
+      <Hello name="Urte" age={48} />
+      <Hello name={name} age={age} />
+    </>
+  );
 };
 
 export default App;
