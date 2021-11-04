@@ -1,32 +1,26 @@
-import React from "react";
+import React, { useState } from "react";
 
-const Hello = ({ name, age }) => {
-  function bornYear() {
-    return new Date().getFullYear() - age;
+const Display = ({ counter }) => <div>{counter}</div>;
+
+const Button = ({ onClick, text }) => <button onClick={onClick}>{text}</button>;
+
+const App = () => {
+  const [ counter, setCounter ] = useState(0);
+
+  function increaseByOne() {
+    setCounter(counter + 1);
+  }
+
+  function setBeast() {
+    setCounter(666);
   }
 
   return (
-    <>
-      <p>
-        Hello, {name}, you look like you're {age} years old!
-      </p>
-      <p>
-        So were you born in {bornYear()}?
-      </p>
-    </>
-  );
-};
-
-const App = () => {
-  const name = "Marc";
-  const age = 10;
-
-  return (
-    <>
-      <h1>Greetings!</h1>
-      <Hello name="Urte" age={48} />
-      <Hello name={name} age={age} />
-    </>
+    <div>
+      <Display counter={counter} />
+      <Button onClick={increaseByOne} text="Plus" />
+      <Button onClick={setBeast} text="Beast" />
+    </div>
   );
 };
 
