@@ -1,25 +1,47 @@
 import React, { useState } from "react";
 
-const Display = ({ counter }) => <div>{counter}</div>;
+const Counter = ({ counter }) => <p>{counter}</p>;
 
-const Button = ({ onClick, text }) => <button onClick={onClick}>{text}</button>;
+const Button = ({ onClick, text }) => <p><button onClick={onClick}>{text}</button></p>;
 
-const App = () => {
-  const [ counter, setCounter ] = useState(0);
-
-  function increaseByOne() {
-    setCounter(counter + 1);
-  }
-
-  function setBeast() {
-    setCounter(666);
+const History = ({ allClicks }) => {
+  if (allClicks.length === 0) {
+    return (
+      <p>
+        Please start pressing the buttons.
+      </p>
+    )
   }
 
   return (
+    <p>
+      Button press history: {allClicks.join("-")}
+    </p>
+  )
+}
+
+const App = () => {
+  const [ left, setLeft ] = useState(0);
+  const [ right, setRight ] = useState(0);
+  const [ allClicks, setAll ] = useState([]);
+
+  const handleLeftClick = () => {
+    setAll(allClicks.concat("L"));
+    setLeft(left + 1);
+  };
+
+  const handleRightClick = () => {
+    setAll(allClicks.concat("R"));
+    setRight(right + 1);
+  };
+
+  return (
     <div>
-      <Display counter={counter} />
-      <Button onClick={increaseByOne} text="Plus" />
-      <Button onClick={setBeast} text="Beast" />
+      <Counter counter={left} />
+      <Button onClick={handleLeftClick} text="Left" />
+      <Counter counter={right} />
+      <Button onClick={handleRightClick} text="Right" />
+      <History allClicks={allClicks} />
     </div>
   );
 };
