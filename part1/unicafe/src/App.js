@@ -2,10 +2,10 @@ import React, { useState } from 'react'
 
 const Button = ({ onClick, text }) => <button onClick={onClick}>{text}</button>;
 
-const Feedback = () => {
-  const handleClickGood = () => setGood(good + 1);
-  const handleClickNeutral = () => setNeutral(neutral + 1);
-  const handleClickBad = () => setBad(bad + 1);
+const Feedback = ({ handlers, stats }) => {
+  const handleClickGood = () => handlers.setGood(stats.good + 1);
+  const handleClickNeutral = () => handlers.setNeutral(stats.neutral + 1);
+  const handleClickBad = () => handlers.setBad(stats.bad + 1);
 
   return (
     <>
@@ -22,8 +22,7 @@ const Stat = ({ name, count }) => <p>{name}: {count}</p>;
 const Statistics = ({ stats }) => {
   return (
     <>
-      <h1>
-      </h1>
+      <h1>statistics</h1>
       <Stat name="good" count={stats.good} />
       <Stat name="neutral" count={stats.neutral} />
       <Stat name="bad" count={stats.bad} />
@@ -39,7 +38,7 @@ const App = () => {
 
   return (
     <div>
-      <Feedback />
+      <Feedback handlers={{ setGood, setNeutral, setBad }} stats={{ good, neutral, bad }}/>
       <Statistics stats={{ good, neutral, bad }} />
     </div>
   );
