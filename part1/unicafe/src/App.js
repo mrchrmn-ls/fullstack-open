@@ -17,15 +17,23 @@ const Feedback = ({ handlers, stats }) => {
   )
 }
 
-const Stat = ({ name, count }) => <p>{name}: {count}</p>;
+const Stat = ({ name, number }) => <p>{name}: {number}</p>;
 
 const Statistics = ({ stats }) => {
+  let clickCount = 0;
+  for (let key in stats) {
+    clickCount += stats[key]
+  }
+  let average = ((stats.good - stats.bad) / clickCount).toFixed(2);
+
   return (
     <>
       <h1>statistics</h1>
-      <Stat name="good" count={stats.good} />
-      <Stat name="neutral" count={stats.neutral} />
-      <Stat name="bad" count={stats.bad} />
+      <Stat name="good" number={stats.good} />
+      <Stat name="neutral" number={stats.neutral} />
+      <Stat name="bad" number={stats.bad} />
+      <Stat name="clicks" number={clickCount} />
+      <Stat name="average" number={average} />
     </>
   )
 }
