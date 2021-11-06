@@ -17,7 +17,7 @@ const Feedback = ({ handlers, stats }) => {
   )
 }
 
-const Stat = ({ name, number }) => <p>{name}: {number}</p>;
+const Stat = ({ name, value }) => <p>{name}: {value}</p>;
 
 const Statistics = ({ stats }) => {
   let clickCount = 0;
@@ -26,16 +26,25 @@ const Statistics = ({ stats }) => {
   }
   let average = ((stats.good - stats.bad) / clickCount).toFixed(2);
 
-  return (
-    <>
-      <h1>statistics</h1>
-      <Stat name="good" number={stats.good} />
-      <Stat name="neutral" number={stats.neutral} />
-      <Stat name="bad" number={stats.bad} />
-      <Stat name="clicks" number={clickCount} />
-      <Stat name="average" number={average} />
-    </>
-  )
+  if (clickCount > 0) {
+    return (
+      <>
+        <h1>statistics</h1>
+        <Stat name="good" value={stats.good} />
+        <Stat name="neutral" value={stats.neutral} />
+        <Stat name="bad" value={stats.bad} />
+        <Stat name="clicks" value={clickCount} />
+        <Stat name="average" value={average} />
+      </>
+    )  
+  } else {
+    return (
+      <>
+        <h1>statistics</h1>
+        <p>no feedback given, yet</p>
+      </>
+    )  
+  }
 }
 
 const App = () => {
