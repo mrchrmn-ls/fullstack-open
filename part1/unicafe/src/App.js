@@ -17,7 +17,7 @@ const Feedback = ({ handlers, stats }) => {
   )
 }
 
-const Stat = ({ name, value }) => <p>{name}: {value}</p>;
+const Stat = ({ name, value }) => <tr><td>{name}:</td><td>{value}</td></tr>;
 
 const Statistics = ({ stats }) => {
   let clickCount = 0;
@@ -30,11 +30,15 @@ const Statistics = ({ stats }) => {
     return (
       <>
         <h1>statistics</h1>
-        <Stat name="good" value={stats.good} />
-        <Stat name="neutral" value={stats.neutral} />
-        <Stat name="bad" value={stats.bad} />
-        <Stat name="clicks" value={clickCount} />
-        <Stat name="average" value={average} />
+        <table>
+          <tbody>
+            <Stat name="good" value={stats.good} />
+            <Stat name="neutral" value={stats.neutral} />
+            <Stat name="bad" value={stats.bad} />
+            <Stat name="clicks" value={clickCount} />
+            <Stat name="average" value={average} />
+          </tbody>
+        </table>
       </>
     )  
   } else {
