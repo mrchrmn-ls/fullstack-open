@@ -3,7 +3,6 @@ import React from "react";
 const Person = ({ info }) => <p>{info.name} - {info.number}</p>
 
 const People = ({ persons }) => {
-  console.log("Peopling!");
   if (persons.length > 0) {
     return (
       <>
@@ -17,7 +16,6 @@ const People = ({ persons }) => {
       <p>No name or number contains the search term.</p>
     )
   }
-
 }
 
 export default People;
