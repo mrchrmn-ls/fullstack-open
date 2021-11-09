@@ -2,7 +2,12 @@ import React, { useEffect, useState } from "react";
 import axios from "axios";
 
 
-const SearchResult = ({ countries }) => {
+const SearchResult = ({ countries, setSearchPhrase }) => {
+  const showCountry = (event) => {
+    event.preventDefault();
+    setSearchPhrase(event.target.value);
+  }
+  
   if (countries.length > 10) return (
     <p>Too many matching countries. Please be more specific.</p>
   );
@@ -10,7 +15,13 @@ const SearchResult = ({ countries }) => {
   if (countries.length > 1) return (
     <>
       {
-        countries.map(country => <p key={country.population}>{country.name.common}</p>)
+        countries.map(country => {
+          return (
+            <p key={country.population}>
+              {country.name.common} <button onClick={showCountry} value={country.name.common}>show info</button>
+            </p>
+          );         
+        })
       }
     </>
   );
@@ -45,7 +56,7 @@ const Country = ({ country }) => {
 
 function App() {
   const [ countries, setCountries ] = useState([]);
-  const [ searchPhrase, setSearchText ] = useState("");
+  const [ searchPhrase, setSearchPhrase ] = useState("");
 
   useEffect(() => {
     axios
@@ -56,7 +67,7 @@ function App() {
   }, [])
 
   const searchHandler = (event) => {
-    setSearchText(event.target.value);
+    setSearchPhrase(event.target.value);
   };
 
   const searchResult = (countries, searchPhrase) => {
@@ -79,7 +90,7 @@ function App() {
   return (
     <div>
       Find country: <input onChange={searchHandler} value={searchPhrase} />
-      <SearchResult countries={searchResult(countries, searchPhrase)} />
+      <SearchResult countries={searchResult(countries, searchPhrase)} setSearchPhrase={setSearchPhrase} />
     </div>
   );
 }
