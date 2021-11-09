@@ -2,16 +2,16 @@ import React from "react";
 
 import personServices from "../services/persons";
 
-const Person = ({ info, deletePerson }) => {
+function Person({ info, deletePerson }) {
   return (
     <p>
-      {info.name} - {info.number} - 
+      {info.name} - {info.number} -
       <button onClick={deletePerson} value={info.id}>delete</button>
     </p>
-  )
+  );
 }
 
-const People = ({ foundPersons, allPersons, setPersons }) => {
+function People({ foundPersons, allPersons, setPersons, setMessage }) {
   function deletePerson(event) {
     let id = Number(event.target.value);
     let person = allPersons.find(person => person.id === id);
@@ -21,6 +21,11 @@ const People = ({ foundPersons, allPersons, setPersons }) => {
         .remove(id)
         .then(() => {
           setPersons(allPersons.filter(person => person.id !== id));
+          setMessage({
+            text: `Deleted ${person.name} from phonebook.`,
+            type: "success"
+          });
+          setTimeout(() => setMessage({text: null}), 3000);
         });
     }
   }
@@ -28,15 +33,13 @@ const People = ({ foundPersons, allPersons, setPersons }) => {
   if (foundPersons.length > 0) {
     return (
       <>
-        {
-          foundPersons.map(person => <Person key={person.id} info={person} deletePerson={deletePerson} />)
-        }
+        {foundPersons.map(person => <Person key={person.id} info={person} deletePerson={deletePerson} />)}
       </>
-    );  
+    );
   } else {
     return (
       <p>No name or number contains the search term.</p>
-    )
+    );
   }
 }
 

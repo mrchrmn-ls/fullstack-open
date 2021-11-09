@@ -2,17 +2,18 @@ import React from "react";
 
 import personServices from "../services/persons";
 
-const PersonForm = ({ state }) => {
-  const { newName, setNewName, newNumber, setNewNumber, persons, setPersons } = state;
-  const handleNameInput = (event) => {
+function PersonForm({ state }) {
+  const { newName, setNewName, newNumber, setNewNumber, persons, setPersons, setMessage } = state;
+
+  function handleNameInput(event) {
     setNewName(event.target.value);
   }
 
-  const handleNumberInput = (event) => {
+  function handleNumberInput(event) {
     setNewNumber(event.target.value);
   }
 
-  const addPerson = (event) => {
+  function addPerson(event) {
     event.preventDefault();
 
     const personsCopy = persons.slice();
@@ -28,7 +29,14 @@ const PersonForm = ({ state }) => {
           existing.number = newNumber.trim();
           personServices
             .update(existing.id, existing)
-            .then(() => setPersons(personsCopy));
+            .then(() => {
+              setPersons(personsCopy);
+              setMessage({
+                text: `Updated ${existing.name}'s phone number.`,
+                type: "success"
+              });
+              setTimeout(() => setMessage({text: null}), 3000);
+            });
           return true;
 
         } else {
@@ -47,21 +55,26 @@ const PersonForm = ({ state }) => {
       .then(resPerson => {
         setPersons(persons.concat(resPerson));
         setNewName("");
-        setNewNumber("");    
+        setNewNumber("");
+        setMessage({
+          text: `Added ${newName} to phonebook.`,
+          type: "success"
+        });
+        setTimeout(() => setMessage({text: null}), 3000);
       });
   }
 
   return (
     <form onSubmit={addPerson}>
       <div>
-        Name: <input onChange={handleNameInput} value={newName}/>
-        Number: <input onChange={handleNumberInput} value={newNumber}/>
+        Name: <input onChange={handleNameInput} value={newName} />
+        Number: <input onChange={handleNumberInput} value={newNumber} />
       </div>
       <div>
         <button type="submit">add / edit</button>
       </div>
     </form>
-  )
+  );
 }
 
 export default PersonForm;
