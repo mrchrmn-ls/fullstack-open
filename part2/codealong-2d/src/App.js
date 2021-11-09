@@ -3,7 +3,7 @@ import axios from "axios";
 import Note from "./components/Note";
 
 
-const App = () => {
+function App() {
   const [notes, setNotes] = useState([]);
   const [newNote, setNewNote] = useState("");
   const [showAll, setShowAll] = useState(true);
@@ -16,20 +16,23 @@ const App = () => {
       }) 
     }, []);
 
-  const addNote = (event) => {
+  function addNote(event) {
     event.preventDefault();
     const noteObject = {
       content: newNote,
       date: new Date().toISOString(),
-      important: Math.random < 0.5,
-      id: notes.length + 1
+      important: Math.random < 0.5
     };
 
-    setNotes(notes.concat(noteObject));
-    setNewNote("");
+    axios
+      .post("http://localhost:3001/notes", noteObject)
+      .then(res => {
+        setNotes(notes.concat(res.data));
+        setNewNote("");    
+      });
   }
 
-  const handleNoteChange = (event) => {
+  function handleNoteChange(event) {
     console.log(event.target.value);
     setNewNote(event.target.value);
   }
@@ -56,6 +59,6 @@ const App = () => {
       </form>
     </div>
   );
-};
+}
 
 export default App;
