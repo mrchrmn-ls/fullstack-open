@@ -20,12 +20,20 @@ function People({ foundPersons, allPersons, setPersons, setMessage }) {
       personServices
         .remove(id)
         .then(() => {
-          setPersons(allPersons.filter(person => person.id !== id));
           setMessage({
             text: `Deleted ${person.name} from phonebook.`,
             type: "success"
           });
           setTimeout(() => setMessage({text: null}), 3000);
+          setPersons(allPersons.filter(person => person.id !== id));
+        })
+        .catch(error => {
+          setMessage({
+            text: `${person.name}'s information was already deleted from server.`,
+            type: "error"
+          });
+          setTimeout(() => setMessage({ text: null }), 5000);
+          setPersons(allPersons.filter(person => person.id !== id));
         });
     }
   }
