@@ -51,7 +51,7 @@ function App() {
       .catch(error => {
         setErrorMessage(`The note '${note.content}' was already deleted from server`);
         setTimeout(() => setErrorMessage(null), 5000);
-        setNotes(notes.filter(n => n.id !== id));
+        setNotes(notes.filter(note => note.id !== id));
       });
   }
 
