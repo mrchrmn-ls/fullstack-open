@@ -1,5 +1,7 @@
 import React from "react";
 
+import personServices from "../services/persons";
+
 const PersonForm = ({ state }) => {
   const { newName, setNewName, newNumber, setNewNumber, persons, setPersons } = state;
   const handleNameInput = (event) => {
@@ -14,17 +16,21 @@ const PersonForm = ({ state }) => {
     event.preventDefault();
 
     const personsCopy = persons.slice();
-    const existing = personsCopy.filter(person => person.name.toLowerCase() === newName.trim().toLowerCase());
+    const existing = personsCopy.find(person => person.name.toLowerCase() === newName.trim().toLowerCase());
 
-    if (existing.length > 0) {
-      if (existing[0].number === newNumber.trim()) {
+    if (existing) {
+      if (existing.number === newNumber.trim()) {
         alert(`There is already an entry for ${newName} with the same number.`);
         return null;
+
       } else {
-        if (window.confirm(`There is already an entry for ${existing[0].name}. Update number?`)) {
-          existing[0].number = newNumber.trim();
-          setPersons(personsCopy);
+        if (window.confirm(`There is already an entry for ${existing.name}. Update number?`)) {
+          existing.number = newNumber.trim();
+          personServices
+            .update(existing.id, existing)
+            .then(() => setPersons(personsCopy));
           return true;
+
         } else {
           return null;
         }
@@ -36,9 +42,13 @@ const PersonForm = ({ state }) => {
       number: newNumber.trim()
     };
 
-    setPersons(persons.concat(personObject));
-    setNewName("");
-    setNewNumber("");
+    personServices
+      .create(personObject)
+      .then(resPerson => {
+        setPersons(persons.concat(resPerson));
+        setNewName("");
+        setNewNumber("");    
+      });
   }
 
   return (

@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
-import axios from "axios";
+
+import personServices from "./services/persons";
 
 import Search from "./components/Search";
 import PersonForm from "./components/PersonForm";
@@ -14,10 +15,10 @@ const App = () => {
   const [ search, setSearch ] = useState("");
 
   useEffect(()=> {
-    axios
-      .get("http://localhost:3001/persons")
-      .then(res => {
-        setPersons(res.data);
+    personServices
+      .getAll()
+      .then(resPersons => {
+        setPersons(resPersons);
       });
   }, []);
 
@@ -35,7 +36,7 @@ const App = () => {
       <h2>Add person or edit number</h2>
       <PersonForm state={{newName, setNewName, newNumber, setNewNumber, persons, setPersons}}/>
       <h2>People</h2>
-      <People persons={searchResult(persons, search)} />
+      <People foundPersons={searchResult(persons, search)} allPersons={persons} setPersons={setPersons} />
     </div>
   );
 };
