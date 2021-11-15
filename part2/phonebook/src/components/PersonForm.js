@@ -31,6 +31,8 @@ function PersonForm({ state }) {
             .update(existing.id, existing)
             .then(() => {
               setPersons(personsCopy);
+              setNewName("");
+              setNewNumber("");
               setMessage({
                 text: `Updated ${existing.name}'s phone number.`,
                 type: "success"
