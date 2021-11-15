@@ -13,7 +13,7 @@ function Person({ info, deletePerson }) {
 
 function People({ foundPersons, allPersons, setPersons, setMessage }) {
   function deletePerson(event) {
-    let id = Number(event.target.value);
+    let id = event.target.value;
     let person = allPersons.find(person => person.id === id);
 
     if (window.confirm(`Delete ${person.name} from phonebook?`)) {
