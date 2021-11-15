@@ -38,6 +38,13 @@ function PersonForm({ state }) {
                 type: "success"
               });
               setTimeout(() => setMessage({text: null}), 3000);
+            })
+            .catch(error => {
+              setMessage({
+                text: error.response.data.error,
+                type: "error"
+              });
+              setTimeout(() => setMessage({text: null}), 6000);
             });
           return true;
 
@@ -63,6 +70,13 @@ function PersonForm({ state }) {
           type: "success"
         });
         setTimeout(() => setMessage({text: null}), 3000);
+      })
+      .catch(error => {
+        setMessage({
+          text: error.response.data.error,
+          type: "error"
+        });
+        setTimeout(() => setMessage({text: null}), 6000);
       });
   }
 
