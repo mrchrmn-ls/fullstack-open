@@ -1,5 +1,5 @@
 import axios from 'axios'
-const baseUrl = '/api/blogs'
+const baseURL = '/api/blogs'
 
 let token = null;
 
@@ -8,8 +8,19 @@ function setToken(newToken) {
 }
 
 function getAll() {
-  const request = axios.get(baseUrl)
+  const request = axios.get(baseURL)
   return request.then(response => response.data)
 }
 
-export default { getAll, setToken }
+async function create(newObject) {
+  const config = {
+    headers: { Authorization: token }
+  };
+
+  const res = await axios.post(baseURL, newObject, config);
+  return res.data;
+}
+
+const blogService = { getAll, create, setToken }
+
+export default blogService;

@@ -12,7 +12,7 @@ function LoginForm(state) {
         password: state.password
       });
 
-      window.localStorage.setItem("currentNoteAppUser", JSON.stringify(user));
+      window.localStorage.setItem("currentBloglistAppUser", JSON.stringify(user));
       blogService.setToken(user.token);
 
       state.setUser(user);
@@ -20,8 +20,8 @@ function LoginForm(state) {
       state.setPassword("");
 
     } catch (error) {
-      state.setErrorMessage("Wrong credentials.");
-      setTimeout(() => state.setErrorMessage(null), 5000);
+      state.setMessage({ text: "Wrong credentials", type: "error" });
+      setTimeout(() => state.setMessage({ text: null }), 5000);
     }  
   }
 

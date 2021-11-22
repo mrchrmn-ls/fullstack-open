@@ -1,13 +1,13 @@
 import React from "react";
 
 function Notification({ message }) {
-  if (message === null) {
+  if (message.text === null) {
     return null;
   }
 
   return (
-    <div className="error">
-      {message}
+    <div className={message.type}>
+      {message.text}
     </div>
   )
 }
