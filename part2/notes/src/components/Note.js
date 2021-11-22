@@ -1,4 +1,4 @@
-import React from 'react';
+import React from "react";
 
 function Note({ note, toggleImportance }) {
   const label = note.important ? "make unimportant" : "make important";

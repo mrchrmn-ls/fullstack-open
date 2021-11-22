@@ -3,6 +3,8 @@ import React, { useEffect, useState } from 'react';
 import Note from "./components/Note";
 import Notification from "./components/Notification";
 import Footer from "./components/Footer";
+import LoginForm from "./components/LoginForm";
+import NoteForm from "./components/NoteForm"
 
 import noteService from "./services/notes";
 
@@ -11,6 +13,9 @@ function App() {
   const [newNote, setNewNote] = useState("");
   const [showAll, setShowAll] = useState(true);
   const [errorMessage, setErrorMessage] = useState(null);
+  const [username, setUsername] = useState("");
+  const [password, setPassword] = useState("");
+  const [user, setUser] = useState(null);
 
 
   useEffect(() => {
@@ -20,23 +25,6 @@ function App() {
         setNotes(resNotes);
       }) 
     }, []);
-
-
-  function addNote(event) {
-    event.preventDefault();
-    const noteObject = {
-      content: newNote,
-      date: new Date().toISOString(),
-      important: Math.random < 0.5
-    };
-
-    noteService
-      .create(noteObject)
-      .then(resNote => {
-        setNotes(notes.concat(resNote));
-        setNewNote("");    
-      });
-  }
 
 
   function toggleImportanceOf(id) {
@@ -56,22 +44,37 @@ function App() {
   }
 
 
-  function handleNoteChange(event) {
-    setNewNote(event.target.value);
-  }
-
-
   const notesToShow = showAll ? notes : notes.filter(note => note.important);
+
 
   return (
     <div>
       <h1>Notes</h1>
       <Notification message={errorMessage} />
+
+      {
+        user === null ?
+        LoginForm({ username,
+                    password,
+                    setUsername,
+                    setPassword,
+                    setUser,
+                    setErrorMessage }) :
+        <div>
+          <p>{user.name} is logged in.</p>
+          {NoteForm({ notes,
+                      setNotes,
+                      newNote,
+                      setNewNote })}
+        </div>
+      }
+
       <div>
         <button onClick={() => setShowAll(!showAll)}>
           show {showAll ? "important" : "all"}
         </button>
       </div>
+
       <ul>
         {notesToShow.map(note => 
           <Note key={note.id}
@@ -79,11 +82,7 @@ function App() {
                 toggleImportance={() => toggleImportanceOf(note.id)}/>
         )}
       </ul>
-      <form onSubmit={addNote}>
-        <input value={newNote}
-               onChange={handleNoteChange}/>
-        <button type="submit">save</button>
-      </form>
+
       <Footer />
     </div>
   );
