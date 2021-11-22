@@ -27,6 +27,16 @@ function App() {
     }, []);
 
 
+  useEffect(() => {
+    const currentUserJSON = window.localStorage.getItem("currentNoteAppUser");
+    if (currentUserJSON) {
+      const user = JSON.parse(currentUserJSON);
+      setUser(user);
+      noteService.setToken(user.token);
+    }
+  }, []);
+
+
   function toggleImportanceOf(id) {
     const note = notes.find(note => note.id === id);
     const changedNote = { ...note, important: !note.important};
@@ -36,13 +46,17 @@ function App() {
       .then(resNote => {
         setNotes(notes.map(note => note.id !== id ? note : resNote));
       })
-      .catch(error => {
+      .catch((error) => {
         setErrorMessage(`The note '${note.content}' was already deleted from server`);
         setTimeout(() => setErrorMessage(null), 5000);
         setNotes(notes.filter(note => note.id !== id));
       });
   }
 
+
+  function logout() {
+    window.localStorage.removeItem("currentNoteAppUser");
+  }
 
   const notesToShow = showAll ? notes : notes.filter(note => note.important);
 
@@ -61,7 +75,7 @@ function App() {
                     setUser,
                     setErrorMessage }) :
         <div>
-          <p>{user.name} is logged in.</p>
+          <p>{user.name} is logged in. <a href="/" onClick={logout}>log out</a></p>
           {NoteForm({ notes,
                       setNotes,
                       newNote,

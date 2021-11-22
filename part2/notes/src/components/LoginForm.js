@@ -1,5 +1,6 @@
 import React from "react";
 import loginService from "../services/login";
+import noteService from "../services/notes"
 
 function LoginForm(state) {
   async function handleLogin(event) {
@@ -10,6 +11,9 @@ function LoginForm(state) {
         username: state.username,
         password: state.password
       });
+
+      window.localStorage.setItem("currentNoteAppUser", JSON.stringify(user));
+      noteService.setToken(user.token);
 
       state.setUser(user);
       state.setUsername("");
