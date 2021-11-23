@@ -9,13 +9,14 @@ import NoteForm from "./components/NoteForm"
 import noteService from "./services/notes";
 
 function App() {
-  const [notes, setNotes] = useState([]);
-  const [newNote, setNewNote] = useState("");
-  const [showAll, setShowAll] = useState(true);
-  const [errorMessage, setErrorMessage] = useState(null);
-  const [username, setUsername] = useState("");
-  const [password, setPassword] = useState("");
-  const [user, setUser] = useState(null);
+  const [ notes, setNotes ] = useState([]);
+  const [ newNote, setNewNote ] = useState("");
+  const [ showAll, setShowAll ] = useState(true);
+  const [ errorMessage, setErrorMessage ] = useState(null);
+  const [ username, setUsername ] = useState("");
+  const [ password, setPassword ] = useState("");
+  const [ user, setUser ] = useState(null);
+  const [ loginVisible, setLoginVisible ] = useState(false);
 
 
   useEffect(() => {
@@ -68,12 +69,14 @@ function App() {
 
       {
         user === null ?
-        LoginForm({ username,
-                    password,
+        LoginForm({ setUser,
+                    username,
                     setUsername,
+                    password,
                     setPassword,
-                    setUser,
-                    setErrorMessage }) :
+                    setErrorMessage,
+                    loginVisible,
+                    setLoginVisible }) :
         <div>
           <p>{user.name} is logged in. <a href="/" onClick={logout}>log out</a></p>
           {NoteForm({ notes,
@@ -83,11 +86,11 @@ function App() {
         </div>
       }
 
-      <div>
+      <p>
         <button onClick={() => setShowAll(!showAll)}>
           show {showAll ? "important" : "all"}
         </button>
-      </div>
+      </p>
 
       <ul>
         {notesToShow.map(note => 
