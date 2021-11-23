@@ -1,4 +1,4 @@
-import React, { useEffect, useState, useRef } from 'react';
+import React, { useEffect, useState, useRef } from "react";
 
 import Note from "./components/Note";
 import Notification from "./components/Notification";
@@ -23,7 +23,7 @@ function App() {
       .getAll()
       .then(resNotes => {
         setNotes(resNotes);
-      }) 
+      });
     }, []);
 
 
@@ -39,14 +39,14 @@ function App() {
 
   function toggleImportanceOf(id) {
     const note = notes.find(note => note.id === id);
-    const changedNote = { ...note, important: !note.important};
+    const changedNote = { ...note, important: !note.important };
 
     noteService
       .update(id, changedNote)
       .then(resNote => {
         setNotes(notes.map(note => note.id !== id ? note : resNote));
       })
-      .catch((error) => {
+      .catch(() => {
         setErrorMessage(`The note '${note.content}' was already deleted from server`);
         setTimeout(() => setErrorMessage(null), 5000);
         setNotes(notes.filter(note => note.id !== id));
@@ -69,11 +69,11 @@ function App() {
       {
         user === null ?
         <Togglable buttonLabel="login">
-          <LoginForm state={{ setUser, setErrorMessage }} />
+          <LoginForm setUser={setUser} setErrorMessage={setErrorMessage} />
         </Togglable> :
         <div>
           <p>{user.name} is logged in. <a href="/" onClick={logout}>log out</a></p>
-          <Togglable buttonLabel="new note" ref={noteFormRef}>          
+          <Togglable buttonLabel="new note" ref={noteFormRef}>
             <NoteForm state={{ notes, setNotes, noteFormRef }} />
           </Togglable>
         </div>
@@ -86,9 +86,9 @@ function App() {
       </p>
 
       <ul>
-        {notesToShow.map(note => 
+        {notesToShow.map(note =>
           <Note key={note.id}
-                note={note} 
+                note={note}
                 toggleImportance={() => toggleImportanceOf(note.id)}/>
         )}
       </ul>
