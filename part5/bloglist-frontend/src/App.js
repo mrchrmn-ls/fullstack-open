@@ -1,21 +1,21 @@
-import React, { useState, useEffect, useRef } from 'react';
-import "./index.css"
+import React, { useState, useEffect, useRef } from "react";
+import "./index.css";
 
-import Blog from './components/Blog';
+import Blog from "./components/Blog";
 import LoginForm from "./components/LoginForm";
 import Notification from "./components/Notification";
 import BlogForm from "./components/BlogForm";
 import Footer from "./components/Footer";
 import Togglable from "./components/Togglable";
 
-import blogService from './services/blogs';
+import blogService from "./services/blogs";
 
 const App = () => {
   const [ blogs, setBlogs ] = useState([]);
   const [ user, setUser ] = useState(null);
   const [ username, setUsername ] = useState("");
   const [ password, setPassword ] = useState("");
-  const [ message, setMessage ] = useState({text: null, type: "success"});
+  const [ message, setMessage ] = useState({ text: null, type: "success" });
 
   const blogFormRef = useRef();
 
@@ -67,7 +67,7 @@ const App = () => {
 
       <Footer />
     </div>
-  )
-}
+  );
+};
 
-export default App
+export default App;

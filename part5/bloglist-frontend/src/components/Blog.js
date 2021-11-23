@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useState } from "react";
 import blogService from "../services/blogs";
 
 function Blog ({ blog, state }) {
@@ -16,13 +16,13 @@ function Blog ({ blog, state }) {
     const update = {
       id: blog.id,
       likes: likes + 1
-    }
+    };
 
     try {
       const updated = await blogService.update(update);
       setLikes(updated.likes);
     } catch (error) {
-      console.log("Coudl not update blog:\n", error)
+      console.log("Coudl not update blog:\n", error);
     }
   }
 
@@ -42,8 +42,8 @@ function Blog ({ blog, state }) {
 
   return (
     <>
-    <p>{blog.title} - {blog.author} - <button onClick={toggleDetails}>{detailsVisible ? "hide" : "show"} details</button>    </p>  
-    <div style={{display: detailsVisible ? "" : "none"}}>
+    <p>{blog.title} - {blog.author} - <button onClick={toggleDetails}>{detailsVisible ? "hide" : "show"} details</button>    </p>
+    <div style={{ display: detailsVisible ? "" : "none" }}>
       <ul>
         <li>{blog.url}</li>
         <li>Likes: {likes} <button onClick={likeBlog}>like</button></li>
@@ -53,7 +53,7 @@ function Blog ({ blog, state }) {
       <button onClick={removeBlog}>remove</button>
     </div>
     </>
-  )  
+  );
 }
 
-export default Blog
+export default Blog;

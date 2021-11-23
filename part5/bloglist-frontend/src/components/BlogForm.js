@@ -16,7 +16,7 @@ function BlogForm({ state }) {
       title: newTitle,
       author: newAuthor,
       url: newURL
-    }
+    };
 
     blogFormRef.current.toggleVisibility();
     const resBlog = await blogService.create(blogObject);
@@ -26,7 +26,7 @@ function BlogForm({ state }) {
     setNewAuthor("");
     setNewURL("");
     setMessage({ text: `added '${resBlog.title}' by ${resBlog.author} to database.`,
-                       type: "success"});
+                       type: "success" });
     setTimeout(() => setMessage({ text: null }), 5000);
   }
 
@@ -35,7 +35,7 @@ function BlogForm({ state }) {
     <h2>add blog</h2>
     <form onSubmit={addBlog}>
       <div>
-        title: <input 
+        title: <input
           type="text"
           value={newTitle}
           name="title"
@@ -43,7 +43,7 @@ function BlogForm({ state }) {
         />
       </div>
       <div>
-        author: <input 
+        author: <input
           type="text"
           value={newAuthor}
           name="title"
@@ -51,7 +51,7 @@ function BlogForm({ state }) {
         />
       </div>
       <div>
-        url: <input 
+        url: <input
           type="text"
           value={newURL}
           name="title"
@@ -61,7 +61,7 @@ function BlogForm({ state }) {
       <button type="submit">add</button>
     </form>
     </>
-  )
+  );
 }
 
 export default BlogForm;

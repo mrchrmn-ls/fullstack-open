@@ -1,6 +1,6 @@
 import React from "react";
 import loginService from "../services/login";
-import blogService from "../services/blogs"
+import blogService from "../services/blogs";
 
 function LoginForm(state) {
   async function handleLogin(event) {
@@ -22,7 +22,7 @@ function LoginForm(state) {
     } catch (error) {
       state.setMessage({ text: "Wrong credentials", type: "error" });
       setTimeout(() => state.setMessage({ text: null }), 5000);
-    }  
+    }
   }
 
   return (
@@ -47,7 +47,7 @@ function LoginForm(state) {
       </div>
       <button type="submit">login</button>
     </form>
-  )
+  );
 }
 
 export default LoginForm;
