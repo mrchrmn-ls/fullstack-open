@@ -1,12 +1,16 @@
-import React from "react";
+import React, { useState } from "react";
 import noteService from "../services/notes";
 
-function NoteForm(state) {
+function NoteForm({ state }) {
+  const { notes, setNotes} = state;
+
+  const [ newNote, setNewNote ] = useState("");
+
   function addNote(event) {
     event.preventDefault();
 
     const noteObject = {
-      content: state.newNote,
+      content: newNote,
       date: new Date().toISOString(),
       important: Math.random < 0.5
     };
@@ -14,15 +18,15 @@ function NoteForm(state) {
     noteService
       .create(noteObject)
       .then(resNote => {
-        state.setNotes(state.notes.concat(resNote));
-        state.setNewNote("");    
+        setNotes(notes.concat(resNote));
+        setNewNote("");    
       });
   }
 
   return (
     <form onSubmit={addNote}>
-      <input value={state.newNote}
-            onChange={({ target }) => state.setNewNote(target.value)}/>
+      <input value={newNote}
+            onChange={({ target }) => setNewNote(target.value)}/>
       <button type="submit">save</button>
     </form>
   )

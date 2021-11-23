@@ -1,17 +1,13 @@
-import React from "react";
+import React, { useState } from "react";
 import loginService from "../services/login";
 import noteService from "../services/notes"
 
-function LoginForm(state) {
-  const { setUser,
-          username,
-          setUsername,
-          password,
-          setPassword,
-          setErrorMessage,
-          loginVisible,
-          setLoginVisible } = state;
-
+function LoginForm({ state }) {
+  const { setUser, setErrorMessage } = state;
+  
+  const [ username, setUsername ] = useState("");
+  const [ password, setPassword ] = useState("");
+        
 
   async function handleLogin(event) {
     event.preventDefault();
@@ -34,10 +30,6 @@ function LoginForm(state) {
 
   return (
       <>
-      <div style={{display: loginVisible ? "none" : ""}}>
-        <button onClick={() => setLoginVisible(true)}>login</button>
-      </div>
-      <div style={{display: loginVisible ? "" : "none"}}>
         <h2>Login</h2>
         <form onSubmit={handleLogin}>
         <div>
@@ -60,8 +52,6 @@ function LoginForm(state) {
         </div>
         <button type="submit">login</button>
       </form>
-      <button onClick={() => setLoginVisible(false)}>cancel</button>
-    </div>
     </>
   )
 }
