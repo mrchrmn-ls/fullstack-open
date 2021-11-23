@@ -22,7 +22,7 @@ const Togglable = React.forwardRef(function (props, ref) {
         <button onClick={toggleVisibility}>cancel</button>
       </div>
     </>
-  )
+  );
 });
 
 Togglable.displayName = "Togglable";
