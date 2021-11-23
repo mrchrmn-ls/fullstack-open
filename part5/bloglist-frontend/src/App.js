@@ -9,6 +9,7 @@ import Footer from "./components/Footer";
 import Togglable from "./components/Togglable";
 
 import blogService from "./services/blogs";
+import userService from "./services/users";
 
 const App = () => {
   const [ blogs, setBlogs ] = useState([]);
@@ -29,9 +30,15 @@ const App = () => {
     const currentUserJSON = window.localStorage.getItem("currentBloglistAppUser");
     if (currentUserJSON) {
       const user = JSON.parse(currentUserJSON);
-      setUser(user);
-      blogService.setToken(user.token);
+      userService.getUser(user.username)
+                 .then(data => {
+                    user.id = data.id;
+                    setUser(user);
+                    blogService.setToken(user.token);
+                    console.log(user);
+                  });
     }
+
   }, []);
 
 
@@ -60,7 +67,9 @@ const App = () => {
             <BlogForm state={{ blogs, setBlogs, setMessage, blogFormRef }}/>
           </Togglable>
           <div>
-            {blogs.slice().sort((a, b) => b.likes - a.likes).map(blog => <Blog key={blog.id} blog={blog} state={{ blogs, setBlogs }} />)}
+            {blogs.slice()
+                  .sort((a, b) => b.likes - a.likes)
+                  .map(blog => <Blog key={blog.id} blog={blog} state={{ blogs, setBlogs, user }} />)}
           </div>
         </div>
       }

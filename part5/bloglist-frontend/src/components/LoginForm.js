@@ -1,6 +1,7 @@
 import React from "react";
 import loginService from "../services/login";
 import blogService from "../services/blogs";
+import userService from "../services/users";
 
 function LoginForm(state) {
   async function handleLogin(event) {
@@ -14,6 +15,9 @@ function LoginForm(state) {
 
       window.localStorage.setItem("currentBloglistAppUser", JSON.stringify(user));
       blogService.setToken(user.token);
+
+      const userData = await userService.getUser(user.username);
+      user.id = userData.id;
 
       state.setUser(user);
       state.setUsername("");

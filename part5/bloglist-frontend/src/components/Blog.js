@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import blogService from "../services/blogs";
 
 function Blog ({ blog, state }) {
-  const { blogs, setBlogs } = state;
+  const { blogs, setBlogs, user } = state;
   const [ detailsVisible, setDetailsVisible ] = useState(false);
   const [ likes, setLikes ] = useState(blog.likes);
 
@@ -40,6 +40,33 @@ function Blog ({ blog, state }) {
   }
 
 
+  function RemoveBlog() {
+    if (!blog.user) {
+      return (
+        <RemoveButton />
+      );
+    }
+
+    if (user.id && (blog.user.id === user.id)) {
+      return (
+        <RemoveButton />
+      );
+    }
+
+    return (
+      <>
+      </>
+    );
+  }
+
+
+  function RemoveButton() {
+    return (
+      <button onClick={removeBlog}>remove</button>
+    );
+  }
+
+
   return (
     <>
     <p>{blog.title} - {blog.author} - <button onClick={toggleDetails}>{detailsVisible ? "hide" : "show"} details</button>    </p>
@@ -50,7 +77,7 @@ function Blog ({ blog, state }) {
         <li>{blog.url}</li>
         <li>{blog.id}</li>
       </ul>
-      <button onClick={removeBlog}>remove</button>
+      <RemoveBlog />
     </div>
     </>
   );

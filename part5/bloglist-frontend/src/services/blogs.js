@@ -1,5 +1,5 @@
-import axios from 'axios'
-const baseURL = '/api/blogs'
+import axios from "axios";
+const baseURL = "/api/blogs";
 
 let token = null;
 
@@ -8,8 +8,8 @@ function setToken(newToken) {
 }
 
 function getAll() {
-  const request = axios.get(baseURL)
-  return request.then(response => response.data)
+  const request = axios.get(baseURL);
+  return request.then(response => response.data);
 }
 
 async function create(newObject) {
@@ -39,6 +39,6 @@ async function remove(id) {
   return res.data;
 }
 
-const blogService = { getAll, create, update, remove, setToken }
+const blogService = { getAll, create, update, remove, setToken };
 
 export default blogService;
