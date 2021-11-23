@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useRef } from 'react';
 
 import Note from "./components/Note";
 import Notification from "./components/Notification";
@@ -16,6 +16,7 @@ function App() {
   const [ errorMessage, setErrorMessage ] = useState(null);
   const [ user, setUser ] = useState(null);
 
+  const noteFormRef = useRef();
 
   useEffect(() => {
     noteService
@@ -72,8 +73,8 @@ function App() {
         </Togglable> :
         <div>
           <p>{user.name} is logged in. <a href="/" onClick={logout}>log out</a></p>
-          <Togglable buttonLabel="new note">          
-            <NoteForm state={{ notes, setNotes }} />
+          <Togglable buttonLabel="new note" ref={noteFormRef}>          
+            <NoteForm state={{ notes, setNotes, noteFormRef }} />
           </Togglable>
         </div>
       }
