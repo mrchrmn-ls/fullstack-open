@@ -16,9 +16,6 @@ const App = () => {
   const [ username, setUsername ] = useState("");
   const [ password, setPassword ] = useState("");
   const [ message, setMessage ] = useState({text: null, type: "success"});
-  const [ newTitle, setNewTitle ] = useState("");
-  const [ newAuthor, setNewAuthor ] = useState("");
-  const [ newURL, setNewURL ] = useState("");
 
   const blogFormRef = useRef();
 
@@ -59,19 +56,12 @@ const App = () => {
         <div>
           <h2>blogs</h2>
           <p>{user.name} is logged in. <a href="/" onClick={logout}>log out</a></p>
-          {blogs.map(blog => <Blog key={blog.id} blog={blog} />)}
-
           <Togglable buttonLabel="add blog" ref={blogFormRef}>
-            <BlogForm state={{ newTitle,
-                              setNewTitle,
-                              newAuthor,
-                              setNewAuthor,
-                              newURL,
-                              setNewURL,
-                              blogs,
-                              setBlogs,
-                              setMessage}}/>
+            <BlogForm state={{ blogs, setBlogs, setMessage, blogFormRef }}/>
           </Togglable>
+          <div>
+            {blogs.map(blog => <Blog key={blog.id} blog={blog} />)}
+          </div>
         </div>
       }
 

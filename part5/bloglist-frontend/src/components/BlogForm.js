@@ -1,25 +1,33 @@
-import React from "react";
+import React, { useState } from "react";
 
 import blogService from "../services/blogs";
 
 function BlogForm({ state }) {
+  const [ newTitle, setNewTitle ] = useState("");
+  const [ newAuthor, setNewAuthor ] = useState("");
+  const [ newURL, setNewURL ] = useState("");
+
+  const { blogs, setBlogs, setMessage, blogFormRef } = state;
+
   async function addBlog(event) {
     event.preventDefault();
 
     const blogObject = {
-      title: state.newTitle,
-      author: state.newAuthor,
-      url: state.newURL
+      title: newTitle,
+      author: newAuthor,
+      url: newURL
     }
 
+    blogFormRef.current.toggleVisibility();
     const resBlog = await blogService.create(blogObject);
-    state.setBlogs(state.blogs.concat(resBlog));
-    state.setNewTitle("");
-    state.setNewAuthor("");
-    state.setNewURL("");
-    state.setMessage({ text: `added '${resBlog.title}' by ${resBlog.author} to database.`,
+
+    setBlogs(blogs.concat(resBlog));
+    setNewTitle("");
+    setNewAuthor("");
+    setNewURL("");
+    setMessage({ text: `added '${resBlog.title}' by ${resBlog.author} to database.`,
                        type: "success"});
-    setTimeout(() => state.setMessage({ text: null }), 5000);
+    setTimeout(() => setMessage({ text: null }), 5000);
   }
 
   return (
@@ -29,25 +37,25 @@ function BlogForm({ state }) {
       <div>
         title: <input 
           type="text"
-          value={state.newTitle}
+          value={newTitle}
           name="title"
-          onChange={({ target }) => state.setNewTitle(target.value)}
+          onChange={({ target }) => setNewTitle(target.value)}
         />
       </div>
       <div>
         author: <input 
           type="text"
-          value={state.newAuthor}
+          value={newAuthor}
           name="title"
-          onChange={({ target }) => state.setNewAuthor(target.value)}
+          onChange={({ target }) => setNewAuthor(target.value)}
         />
       </div>
       <div>
         url: <input 
           type="text"
-          value={state.newURL}
+          value={newURL}
           name="title"
-          onChange={({ target }) => state.setNewURL(target.value)}
+          onChange={({ target }) => setNewURL(target.value)}
         />
       </div>
       <button type="submit">add</button>
