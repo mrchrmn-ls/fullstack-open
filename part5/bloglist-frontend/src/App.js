@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import "./index.css"
 
 import Blog from './components/Blog';
@@ -6,6 +6,8 @@ import LoginForm from "./components/LoginForm";
 import Notification from "./components/Notification";
 import BlogForm from "./components/BlogForm";
 import Footer from "./components/Footer";
+import Togglable from "./components/Togglable";
+
 import blogService from './services/blogs';
 
 const App = () => {
@@ -18,6 +20,7 @@ const App = () => {
   const [ newAuthor, setNewAuthor ] = useState("");
   const [ newURL, setNewURL ] = useState("");
 
+  const blogFormRef = useRef();
 
   useEffect(() => {
     blogService.getAll()
@@ -58,15 +61,17 @@ const App = () => {
           <p>{user.name} is logged in. <a href="/" onClick={logout}>log out</a></p>
           {blogs.map(blog => <Blog key={blog.id} blog={blog} />)}
 
-          <BlogForm state={{ newTitle,
-                             setNewTitle,
-                             newAuthor,
-                             setNewAuthor,
-                             newURL,
-                             setNewURL,
-                             blogs,
-                             setBlogs,
-                             setMessage}}/>
+          <Togglable buttonLabel="add blog" ref={blogFormRef}>
+            <BlogForm state={{ newTitle,
+                              setNewTitle,
+                              newAuthor,
+                              setNewAuthor,
+                              newURL,
+                              setNewURL,
+                              blogs,
+                              setBlogs,
+                              setMessage}}/>
+          </Togglable>
         </div>
       }
 
