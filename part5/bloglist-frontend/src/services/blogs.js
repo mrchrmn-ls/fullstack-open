@@ -21,6 +21,15 @@ async function create(newObject) {
   return res.data;
 }
 
-const blogService = { getAll, create, setToken }
+async function update(updateObject) {
+  const config = {
+    headers: { Authorization: token }
+  };
+
+  const res = await axios.put(`${baseURL}/${updateObject.id}`, updateObject, config);
+  return res.data;
+}
+
+const blogService = { getAll, create, setToken, update }
 
 export default blogService;
