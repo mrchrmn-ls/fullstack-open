@@ -16,22 +16,24 @@ function NoteForm({ state }) {
     };
 
     noteFormRef.current.toggleVisibility();
-
     noteService
       .create(noteObject)
       .then(resNote => {
         setNotes(notes.concat(resNote));
-        setNewNote("");    
+        setNewNote("");
       });
   }
 
   return (
-    <form onSubmit={addNote}>
-      <input value={newNote}
-            onChange={({ target }) => setNewNote(target.value)}/>
-      <button type="submit">save</button>
-    </form>
-  )
+    <div className="formDiv">
+      <h2>Add new note</h2>
+      <form onSubmit={addNote}>
+        <input value={newNote}
+              onChange={({ target }) => setNewNote(target.value)}/>
+        <button type="submit">save</button>
+      </form>
+    </div>
+  );
 }
 
 export default NoteForm;
