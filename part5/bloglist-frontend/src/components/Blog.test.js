@@ -52,4 +52,10 @@ describe("<Blog />", () => {
     expect(blogDetails).toHaveTextContent("Likes");
   });
 
+  xtest("like button works", () => {
+    const likeButton = component.getByText("like");
+    fireEvent.click(likeButton);
+    fireEvent.click(likeButton);
+  });
+
 });
