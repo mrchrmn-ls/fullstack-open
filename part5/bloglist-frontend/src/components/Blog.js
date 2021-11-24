@@ -22,7 +22,7 @@ function Blog ({ blog, state }) {
       const updated = await blogService.update(update);
       setLikes(updated.likes);
     } catch (error) {
-      console.log("Coudl not update blog:\n", error);
+      console.log("Could not update blog:\n", error);
     }
   }
 
@@ -69,8 +69,8 @@ function Blog ({ blog, state }) {
 
   return (
     <>
-    <p>{blog.title} - {blog.author} - <button onClick={toggleDetails}>{detailsVisible ? "hide" : "show"} details</button>    </p>
-    <div style={{ display: detailsVisible ? "" : "none" }}>
+    <p className="titleAuthor">{blog.title} - {blog.author} - <button onClick={toggleDetails}>{detailsVisible ? "hide" : "show"} details</button>    </p>
+    <div className="blogDetails" style={{ display: detailsVisible ? "" : "none" }}>
       <ul>
         <li>{blog.url}</li>
         <li>Likes: {likes} <button onClick={likeBlog}>like</button></li>
