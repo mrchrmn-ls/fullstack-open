@@ -1,7 +1,6 @@
 import React from "react";
 import "@testing-library/jest-dom/extend-expect";
 import { render, fireEvent } from "@testing-library/react";
-import { prettyDOM } from "@testing-library/dom";
 import Blog from "./Blog";
 
 describe("<Blog />", () => {
@@ -42,6 +41,15 @@ describe("<Blog />", () => {
 
     const blogDetails = component.container.querySelector(".blogDetails");
     expect(blogDetails).toHaveStyle("display: none");
+  });
+
+  test("shows details when button clicked", () => {
+    const detailsButton = component.getByText("show details");
+    fireEvent.click(detailsButton);
+
+    const blogDetails = component.container.querySelector(".blogDetails");
+    expect(blogDetails).not.toHaveStyle("display: none");
+    expect(blogDetails).toHaveTextContent("Likes");
   });
 
 });
