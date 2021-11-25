@@ -12,7 +12,7 @@ function NoteForm({ state }) {
     const noteObject = {
       content: newNote,
       date: new Date().toISOString(),
-      important: Math.random < 0.5
+      important: false
     };
 
     noteFormRef.current.toggleVisibility();
@@ -28,8 +28,9 @@ function NoteForm({ state }) {
     <div className="formDiv">
       <h2>Add new note</h2>
       <form onSubmit={addNote}>
-        <input value={newNote}
-              onChange={({ target }) => setNewNote(target.value)}/>
+        <input id="newNoteInput"
+               value={newNote}
+               onChange={({ target }) => setNewNote(target.value)}/>
         <button type="submit">save</button>
       </form>
     </div>
