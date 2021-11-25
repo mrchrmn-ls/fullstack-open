@@ -2,13 +2,13 @@ import React, { useState } from "react";
 import PropTypes from "prop-types";
 
 import loginService from "../services/login";
-import noteService from "../services/notes"
+import noteService from "../services/notes";
 
 function LoginForm({ setUser, setErrorMessage }) {
-  
+
   const [ username, setUsername ] = useState("");
   const [ password, setPassword ] = useState("");
-        
+
 
   async function handleLogin(event) {
     event.preventDefault();
@@ -26,7 +26,7 @@ function LoginForm({ setUser, setErrorMessage }) {
     } catch (error) {
       setErrorMessage("Wrong credentials.");
       setTimeout(() => setErrorMessage(null), 5000);
-    }  
+    }
   }
 
   return (
@@ -36,6 +36,7 @@ function LoginForm({ setUser, setErrorMessage }) {
         <div>
           username
             <input
+            id="username"
             type="text"
             value={username}
             name="Username"
@@ -45,21 +46,22 @@ function LoginForm({ setUser, setErrorMessage }) {
         <div>
           password
             <input
+            id="password"
             type="password"
             value={password}
             name="Password"
             onChange={({ target }) => setPassword(target.value)}
           />
         </div>
-        <button type="submit">login</button>
+        <button type="submit" id="loginSubmit">login</button>
       </form>
     </>
-  )
+  );
 }
 
 LoginForm.propTypes = {
   setUser: PropTypes.func.isRequired,
   setErrorMessage: PropTypes.func.isRequired
-}
+};
 
 export default LoginForm;
