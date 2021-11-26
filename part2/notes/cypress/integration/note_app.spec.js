@@ -61,23 +61,18 @@ describe("Note app", () => {
     });
 
 
-    describe("and a note exists", () => {
+    describe("and several notes exist", () => {
       beforeEach(() => {
-        cy.createNote({
-          content: "another note from cypress",
-          important: false
-        });
+        cy.createNote({ content: "first note", important: false });
+        cy.createNote({ content: "second note", important: false });
+        cy.createNote({ content: "third note", important: false });
       });
 
-      it("it can be made important", () => {
-        cy.contains("another note from cypress")
-          .contains("make important")
-          .click();
-
-        cy.contains("another note from cypress")
-          .contains("make unimportant");
+      it.only("one of those can be made important", () => {
+        cy.contains("second note").parent().find("button").as("theButton");
+        cy.get("@theButton").click();
+        cy.get("@theButton").should("contain", "make unimportant");
       });
     });
   });
-
 });
