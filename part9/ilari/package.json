@@ -6,6 +6,7 @@
   "license": "ISC",
   "main": "index.ts",
   "scripts": {
+    "start": "node build/index.js",
     "tsc": "tsc",
     "dev": "ts-node-dev index.ts",
     "lint": "eslint --ext .ts ."
