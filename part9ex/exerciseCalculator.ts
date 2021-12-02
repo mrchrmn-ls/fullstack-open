@@ -18,7 +18,7 @@ function parseArguments(args: Array<string>): ExerciseValues {
   if (args.length < 4) throw new Error("Not enough arguments.");
   if (args.length > 4) throw new Error("Too many arguments.");
 
-  const dailyHours = JSON.parse(args[2]);
+  const dailyHours = JSON.parse(args[2]) as Array<number>;
 
   if (!isNaN(Number(args[3])) &&
       Array.isArray(dailyHours) &&
