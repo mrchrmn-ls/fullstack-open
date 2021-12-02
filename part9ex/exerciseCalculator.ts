@@ -8,11 +8,37 @@ interface Summary {
   average: string
 }
 
+interface ExerciseValues {
+  dailyHours: Array<number>,
+  target: number
+}
+
+
+function parseArguments(args: Array<string>): ExerciseValues {
+  if (args.length < 4) throw new Error("Not enough arguments.");
+  if (args.length > 4) throw new Error("Too many arguments.");
+
+  let dailyHours = JSON.parse(args[2]);
+
+  if (!isNaN(Number(args[3])) &&
+      Array.isArray(dailyHours) &&
+      dailyHours.every(item => typeof item === "number")) {
+    return {
+      dailyHours,
+      target: Number(args[2])
+    }
+  } else {
+    throw new Error("You need to provide an array of numbers and another number.");
+  }
+}
+
+
 const ratingDescriptions = ["You have to do better.", "Within the target range", "Exceeding expectations."];
 
-function calculateExercises(dailyHours: Array<number>, target: number): Summary {
-  let average = dailyHours.reduce((acc, elem) => acc + elem, 0) / dailyHours.length;
-  let achievement = average / target;
+
+function calculateExercises(input: ExerciseValues): Summary {
+  let average = input.dailyHours.reduce((acc, elem) => acc + elem, 0) / input.dailyHours.length;
+  let achievement = average / input.target;
 
   let rating = 2;
   if (achievement > 1.5) {
@@ -23,14 +49,23 @@ function calculateExercises(dailyHours: Array<number>, target: number): Summary 
   }
  
   return {
-    periodLength: dailyHours.length,
-    trainingDays: dailyHours.filter(hours => hours !== 0).length,
-    success: average >= target,
+    periodLength: input.dailyHours.length,
+    trainingDays: input.dailyHours.filter(hours => hours !== 0).length,
+    success: average >= input.target,
     rating,
     ratingDescription: ratingDescriptions[rating - 1],
-    target,
+    target: input.target,
     average: average.toFixed(2)
   }
 }
 
-console.log(calculateExercises([3, 0, 2, 4.5, 0, 3, 1], 2));
+
+try {
+  console.log(calculateExercises(parseArguments(process.argv)));
+} catch(error: unknown) {
+  let errorMessage = "Something went wrong."
+  if (error instanceof Error) {
+    errorMessage += " Error: " + error.message;
+  }
+  console.log(errorMessage);
+}
