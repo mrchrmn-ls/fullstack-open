@@ -8,35 +8,35 @@ interface Summary {
   average: string
 }
 
-interface ExerciseValues {
+export interface ExerciseValues {
   dailyHours: Array<number>,
   target: number
 }
 
 
-function parseArguments(args: Array<string>): ExerciseValues {
-  if (args.length < 4) throw new Error("Not enough arguments.");
-  if (args.length > 4) throw new Error("Too many arguments.");
+// function parseArguments(args: Array<string>): ExerciseValues {
+//   if (args.length < 4) throw new Error("Not enough arguments.");
+//   if (args.length > 4) throw new Error("Too many arguments.");
 
-  const dailyHours = JSON.parse(args[2]) as Array<number>;
+//   const dailyHours = JSON.parse(args[2]) as Array<number>;
 
-  if (!isNaN(Number(args[3])) &&
-      Array.isArray(dailyHours) &&
-      dailyHours.every(item => typeof item === "number")) {
-    return {
-      dailyHours,
-      target: Number(args[2])
-    };
-  } else {
-    throw new Error("You need to provide an array of numbers and another number.");
-  }
-}
+//   if (!isNaN(Number(args[3])) &&
+//       Array.isArray(dailyHours) &&
+//       dailyHours.every(item => !isNaN(item))) {
+//     return {
+//       dailyHours,
+//       target: Number(args[2])
+//     };
+//   } else {
+//     throw new Error("You need to provide an array of numbers and another number.");
+//   }
+// }
 
 
 const ratingDescriptions = ["You have to do better.", "Within the target range", "Exceeding expectations."];
 
 
-function calculateExercises(input: ExerciseValues): Summary {
+export function calculateExercises(input: ExerciseValues): Summary {
   const average = input.dailyHours.reduce((acc, elem) => acc + elem, 0) / input.dailyHours.length;
   const achievement = average / input.target;
 
@@ -60,12 +60,12 @@ function calculateExercises(input: ExerciseValues): Summary {
 }
 
 
-try {
-  console.log(calculateExercises(parseArguments(process.argv)));
-} catch(error: unknown) {
-  let errorMessage = "Something went wrong.";
-  if (error instanceof Error) {
-    errorMessage += " Error: " + error.message;
-  }
-  console.log(errorMessage);
-}
+// try {
+//   console.log(calculateExercises(parseArguments(process.argv)));
+// } catch(error: unknown) {
+//   let errorMessage = "Something went wrong.";
+//   if (error instanceof Error) {
+//     errorMessage += " Error: " + error.message;
+//   }
+//   console.log(errorMessage);
+// }

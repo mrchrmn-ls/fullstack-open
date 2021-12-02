@@ -4,19 +4,19 @@ interface BMIvalues {
 }
 
 
-function parseArguments(args: Array<string>): BMIvalues {
-  if (args.length < 4) throw new Error("Not enough arguments.");
-  if (args.length > 4) throw new Error("Too many arguments.");
+// function parseArguments(args: Array<string>): BMIvalues {
+//   if (args.length < 4) throw new Error("Not enough arguments.");
+//   if (args.length > 4) throw new Error("Too many arguments.");
 
-  if (!isNaN(Number(args[2])) && !isNaN(Number(args[3]))) {
-    return {
-      height: Number(args[2]),
-      weight: Number(args[3])
-    };
-  } else {
-    throw new Error("You need to provide two _numbers_.");
-  }
-}
+//   if (!isNaN(Number(args[2])) && !isNaN(Number(args[3]))) {
+//     return {
+//       height: Number(args[2]),
+//       weight: Number(args[3])
+//     };
+//   } else {
+//     throw new Error("You need to provide two _numbers_.");
+//   }
+// }
 
 
 function calculateBMI(input: BMIvalues): string {
@@ -30,14 +30,14 @@ function calculateBMI(input: BMIvalues): string {
 }
 
 
-try {
-  console.log(calculateBMI(parseArguments(process.argv)));
-} catch(error: unknown) {
-  let errorMessage = "Something went wrong.";
-  if (error instanceof Error) {
-    errorMessage += " Error: " + error.message;
-  }
-  console.log(errorMessage);
-}
+// try {
+//   console.log(calculateBMI(parseArguments(process.argv)));
+// } catch(error: unknown) {
+//   let errorMessage = "Something went wrong.";
+//   if (error instanceof Error) {
+//     errorMessage += " Error: " + error.message;
+//   }
+//   console.log(errorMessage);
+// }
 
 export default calculateBMI;
