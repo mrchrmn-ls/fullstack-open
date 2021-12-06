@@ -11,7 +11,7 @@ app.get("/ping", (_req, res) => {
   res.send("pong!");
 });
 
-app.use("/api/diary", diaryRouter);
+app.use("/api/diaryentries", diaryRouter);
 
 app.listen(PORT, () => {
   console.log(`Server running on port ${PORT}`);
